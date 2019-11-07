@@ -59,7 +59,10 @@ function each(coll, f) {
   //wordLengths("hello its me") // [5,3,2]
   
   function wordLengths(str) {
-      // TODO: your code here 
+      array = str.split(' '); //turns the string into an array.
+      return map(array, function(element, i) { //return the element.length.
+         return element.length; 
+      })
   }
   
   //=============================================================================
@@ -71,8 +74,19 @@ function each(coll, f) {
   // countOccurrences("hello", "l"); // 2
   // countOccurrences("hello, world!", "l"); // 3
   
+// var count = 0;
+// if (array[i] === character) ====> count++;
+//uses each.
+
   function countOccurrences(string, character) {
-      // your code is here
+      var array = string.split ('');
+      var c = 0;
+      for (i = 0; i < array.length; i++) {
+          if (array[i] == character) {
+              c += 1;
+          }
+      }
+      return c;
   }
   
   //=============================================================================
@@ -83,10 +97,13 @@ function each(coll, f) {
   //solve it using the most appropriate helper functions(reduce,each,map,filter).
   // wordsLongerThanThree("Hello Mad World") //["Hello", "World"]
   
+  //uses filter; filter the array for length gt 3
   function wordsLongerThanThree(str) {
-      // TODO: your code here 
+      var array = str.split(' ');
+      return filter(array, function(word) {
+          return word.length > 3;
+      })
   }
-  
   //=============================================================================
   /*                                  Q4                                        */
   //=============================================================================
@@ -128,8 +145,43 @@ function each(coll, f) {
   // pizza.eatSlice();
   // pizza.eatSlice();
   
-  // Write your code here .....
-  
+  var makePizza = function (crust, size, numberOfSlice) {
+      var obj = {};
+      //properties
+      obj.crust = crust;
+      obj.size = size;
+      obj.numberOfSlice = numberOfSlice;
+      obj.ingredients = [];
+
+      //Methods
+      obj.addIngredients = addIngredients;
+      obj.displayIngredients = displayIngredients;
+      obj.bakePizza = bakePizza;
+      obj.eatSlice = eatSlice;
+      return obj;
+  }
+
+
+var addIngredients = function(ingredient) { //pushes the string to the array of ingredients.
+    this.ingredients.push(ingredient);
+}
+
+var displayIngredients = function() { //returns the ingredients fromt the array seperated by ','.
+    console.log('The ingredients are: ' + this.ingredients.join(','))
+}
+
+var bakePizza = function() {
+   setTimeout(console.log('Your ' + this.crust + ' ' + this.size) + ' ' + this.slice + ' pizaa is done', 2*1000);
+}
+
+var eatSlice = function() {
+    if (this.numberOfSlice > 0) {
+        this.numberOfSlice--;
+    }else {
+        console.log("There're no more slices left!")
+    }
+}
+
   //=============================================================================
   /*                                  Q6                                      */
   //=============================================================================
@@ -153,8 +205,32 @@ function each(coll, f) {
   */
   
   // Now, to make sure that you are actually reading, make a comment below this and type: Yes I am
+  //Yes I am !
   
-  // Write your code here .....
+var ReadingList = function () {
+      var obj = {};
+      obj.read ; //numb
+      obj.unRead; //numb
+      obj.toRead = [];
+      obj.currentRead = ''; //string
+      obj.readBooks = [];
+      obj.AddBook = AddBook; //method
+      obj.finishCurrentBook = finishCurrentBook; //method
+      return obj;
+}
+  
+var AddBook = function(name){
+    this.toRead.push(name);
+    this.unRead++;
+}
+
+var finishCurrentBook = function () {
+    this.readBooks.push(this.currentRead);
+    this.read++;
+    this.currentRead = this.toRead[0];
+    this.unRead--;
+}
+
   
   //=============================================================================
   /*                                  Q7                                       */
@@ -175,6 +251,44 @@ function each(coll, f) {
   //  safe('money','small') => "watch gold-bar money"
   
   // Write your code here .....
+
+var makeSafe = function (init) {
+    var storageLimit = init;
+    var items = [];
+    return function addItem(item, itemSize) {
+        if (itemSize === "big" || itemSize === "medium" || itemSize === "small") { //simple check for sizes.
+            if (storageLimit === 0) {
+                return items.join(' ');
+            }
+
+            if (itemSize === "big") {
+                if (storageLimit >= 3) {
+                    storageLimit-= 3;
+                }else {
+                    return "Can't fit";
+                }
+            }
+            else if (itemSize === "medium") {
+                if (storageLimit >= 2) {
+                    storageLimit-= 2;
+                }else {
+                    return "Can't fit";
+                }
+            }
+            else  {
+                if (storageLimit >= 1) {
+                    storageLimit-= 1;
+                }else {
+                    return "Can't fit";
+                }
+            }
+            items.push(item);
+        }else {
+            return 'Not the right size';
+            }
+    }
+
+}
   
   //=============================================================================
   /*                                  Q8                                       */
@@ -216,10 +330,14 @@ function each(coll, f) {
   //================================================================================
   // Theoretical questions.
   // 1- In your own words,Why do we use Closures ?
+	We use Closure to protect a variable from unwanted modifications or access.
   
   // 2- In OOP, what does "this" refer to ?
-  
+  	"this" refers to whatever is at it left, generally it refers to the element that's inside the object where this
+	is invoked.
   // 3- What is jQuery?
-  
+  	it's a js library that helps you write less code
   // 4- what is the diffrence between Closure's methods and The OOP's methods?
+	OOp methods are a callback function as properties inside an object, 
+	closure's methods are
   
